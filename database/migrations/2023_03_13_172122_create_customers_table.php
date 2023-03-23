@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
+            $table->enum('type_document',['CC','TI']);
+            $table->unsignedBigInteger('number_document');
             $table->string('name');
             $table->string('lastName');
             $table->string('address');

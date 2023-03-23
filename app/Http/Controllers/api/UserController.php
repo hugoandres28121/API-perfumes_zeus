@@ -7,6 +7,9 @@ use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Enum;
+use App\Models\Customer;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -30,14 +33,30 @@ class UserController extends Controller
             'name'=>'required|string|max:255|',
             'email'=>'required|email|max:255|unique:users',
             'password'=>'required|string|max:255|',
-            'confirmed'=>'required|string|max:255|'
+            'confirmed'=>'required|string|max:255|',
+            //Customers Data
+            'type_document'=>'required|integer|in:1,2',
+            'number_document'=>'required|integer',
+            'address'=>'required|string|max:255',
+            'lastName'=>'required|string|max:255'
+            
         ]);
 
         $user = User::create([
             'name'=>$request->name,
+            'number_document'=>$request->number_document,
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
             'confirmed'=>$request->password
+        ]);
+
+        Customer::create([
+            'slug'=>Str::slug(request('name').' '.request('lastName').' '.request('number_document')),
+            'name'=>$request->name,
+            'lastName'=>$request->lastName,
+            'address'=>$request->address,
+            'type_document'=>$request->type_document,
+            'number_document'=>$request->number_document
         ]);
 
         return UserResource::make($user);

@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\Customer;
+use COM;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
@@ -22,10 +24,11 @@ class CustomerFactory extends Factory
         $lastName = $this->faker->unique()->lastName();
 
         return [
-            "slug"=>Str::slug($name),
             "name"=>$name,
             "lastName"=>$lastName,
-            "address"=>$this->faker->address()
+            "address"=>$this->faker->address(),
+            "type_document"=>$this->faker->numberBetween(Customer::CEDULA,Customer::TARJETAIDENTIDAD),
+            "number_document"=>$this->faker->randomNumber(5, true)
         ];
     }
 }

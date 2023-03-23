@@ -24,6 +24,7 @@ class LoginController extends Controller
             'password' => $request->password,
             'scope' => '*',
         ]);
+        
     
         return response()->json([
             "token_type" => $response['token_type'],

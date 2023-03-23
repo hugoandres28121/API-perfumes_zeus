@@ -19,7 +19,6 @@ class CustomerResource extends JsonResource
             'name'=>$this->name,
             'lastName'=>$this->lastName,
             'address'=>$this->address,
-            'slug'=>$this->slug
         ];
     }
 }

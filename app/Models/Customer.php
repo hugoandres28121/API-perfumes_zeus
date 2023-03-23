@@ -10,7 +10,10 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected $fillable= ['slug','name','lastName','address'];
+    CONST CEDULA=1;
+    CONST TARJETAIDENTIDAD=2;
+
+    protected $fillable= ['name','lastName','address','type_document','number_document'];
 
     public function sales():HasMany
     {
