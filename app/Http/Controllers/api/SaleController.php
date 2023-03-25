@@ -11,13 +11,15 @@ use Illuminate\Support\Str;
 use App\Http\Resources\SaleResource;
 use Error;
 use App\Http\Resources\SaleDetailResource;
+use App\Models\User;
+use Exception;
 
 class SaleController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth:api')->except('index','show');
+       // $this->middleware('auth:api')->except('index','show');
     }
 
     /**
@@ -107,8 +109,32 @@ class SaleController extends Controller
     }
     
 
+    public function showSalesByUser($cedula){
+
+        try {
+            $user=User::where('number_document', $cedula)->firstOrFail();
+            
+            if($user->customer==null){
+                throw new Exception('Id No Encontrado');
+            }
+
+            $customer_id=$user->customer->id;
+            $sales = Sale::where('customer_id', $customer_id)->get();
+            if ($sales->isEmpty()) {
+                return response()->noContent();
+            }
+            return SaleResource::collection($sales);
+    
+        } catch (\Exception $e) {
+            return response()->json([
+                "error" => $e->getMessage(),
+            ],status:404);
+        }
+        
+    }
+
     /**
-     * Display the specified resource.
+     * Display the specified resource..
      */
     public function show(string $id)
     {

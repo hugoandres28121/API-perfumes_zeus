@@ -4,20 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Customer extends Model
 {
     use HasFactory;
 
-    CONST CEDULA=1;
-    CONST TARJETAIDENTIDAD=2;
-
-    protected $fillable= ['name','lastName','address','type_document','number_document'];
+    
+    protected $fillable= ['address','mobile_number','user_id'];
 
     public function sales():HasMany
     {
         return $this->hasMany(Sales::class);
+    }
+
+    public  function user():BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
 

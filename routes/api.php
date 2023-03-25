@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('login',[LoginController::class,'login']);
-
+Route::get('users/{cedula}/sales',[SaleController::class,'showSalesByUser']);
 Route::apiResource('users', UserController::class)->names("api.v1.users",);
 Route::apiResource('customers', CustomerController::class)->names("api.v1.customers",);
 Route::apiResource('fragances', FraganceController::class)->names("api.v1.fragances",);

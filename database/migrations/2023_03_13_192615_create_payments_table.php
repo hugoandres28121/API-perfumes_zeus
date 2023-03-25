@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
             $table->dateTime('payment_date');
             $table->decimal('amount_paid',$precision = 10, $scale = 2);
             $table->decimal('missing_amount',$precision = 10, $scale = 2);
-            $table->unsignedBigInteger('sales');
+            $table->unsignedBigInteger('sale_id');
 
-            $table->foreign('sales')
+            $table->foreign('sale_id')
             ->references('id')
             ->on('sales')
             ->onDelete('cascade');

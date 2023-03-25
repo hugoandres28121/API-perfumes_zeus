@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Customer;
-use COM;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
@@ -20,15 +20,11 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
 
-        $name = $this->faker->unique()->name();
-        $lastName = $this->faker->unique()->lastName();
-
+       
         return [
-            "name"=>$name,
-            "lastName"=>$lastName,
             "address"=>$this->faker->address(),
-            "type_document"=>$this->faker->numberBetween(Customer::CEDULA,Customer::TARJETAIDENTIDAD),
-            "number_document"=>$this->faker->randomNumber(5, true)
+            "mobile_number"=>$this->faker->randomNumber(5, true),
+            "user_id"=>User::all()->random()->id
         ];
     }
 }

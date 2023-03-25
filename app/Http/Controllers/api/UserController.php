@@ -34,12 +34,11 @@ class UserController extends Controller
             'email'=>'required|email|max:255|unique:users',
             'password'=>'required|string|max:255|',
             'confirmed'=>'required|string|max:255|',
-            //Customers Data
-            'type_document'=>'required|integer|in:1,2',
             'number_document'=>'required|integer',
-            'address'=>'required|string|max:255',
-            'lastName'=>'required|string|max:255'
-            
+
+            //Customers Data
+            'mobile_number'=>'required|integer',
+            'address'=>'required|string|max:255',            
         ]);
 
         $user = User::create([
@@ -51,12 +50,9 @@ class UserController extends Controller
         ]);
 
         Customer::create([
-            'slug'=>Str::slug(request('name').' '.request('lastName').' '.request('number_document')),
-            'name'=>$request->name,
-            'lastName'=>$request->lastName,
             'address'=>$request->address,
-            'type_document'=>$request->type_document,
-            'number_document'=>$request->number_document
+            'mobile_number'=>$request->mobile_number,
+            'user_id'=>$user->id
         ]);
 
         return UserResource::make($user);

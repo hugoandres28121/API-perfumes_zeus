@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->enum('type_document',['CC','TI']);
-            $table->unsignedBigInteger('number_document');
-            $table->string('name');
-            $table->string('lastName');
+            $table->unsignedBigInteger('mobile_number');
             $table->string('address');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

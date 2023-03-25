@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Sale extends Model
 {
@@ -41,5 +42,10 @@ class Sale extends Model
         return $this->belongsToMany(Fragance::class,'sale_fragance')->withTimestamps()
                                                                     ->withPivot('quantity_fragrance', 'amount');
     }
+
+    // public function user(): HasOneThrough
+    // {
+    //     return $this->hasOneThrough(User::class, Customer::class);
+    // }
 
 }
