@@ -17,7 +17,8 @@ class UserSeeder extends Seeder
             'name'=>'Hugo Andres Marrugo Polo',
             'email'=>'hugomarrugopolo28@hotmail.com',
             'password'=>bcrypt('andres28121'),
-            'number_document'=>1051449969
+            'number_document'=>1051449969,
+            'is_admin'=>true,
 
         ]);
 

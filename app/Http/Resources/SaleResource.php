@@ -20,7 +20,7 @@ class SaleResource extends JsonResource
         return [
             'id_sale'=>$this->id,
             'sale_date'=>$this->sale_date,
-            'customer'=>$this->customer->user->name,
+            'customer'=>$this->user->name,
             'order_detail'=>FraganceDetailResource::collection($this->fragances),
             'total_amount'=>floatval($this->total_amount)
         ];

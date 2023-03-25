@@ -37,7 +37,6 @@ class SaleController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'customer_id' => 'required|integer|exists:customers,id',
             'fragances' => 'required|array',
             'fragances.*.id' => 'required|integer|exists:fragances,id',
             'fragances.*.quantity' => 'required|integer',
@@ -47,10 +46,12 @@ class SaleController extends Controller
 
         try {
             // Crear la venta
+            //$user_id=auth()->user()->id;
             $sale = Sale::create([
                 'slug' => Str::slug(Str::random(10).' '.Str::random(10)), // Generar un código aleatorio de 10 caracteres
                 'sale_date' =>  now()->toDateTimeString(),
-                'customer_id' => $validatedData['customer_id'],
+                //'user_id' => $user_id,
+                'user_id' => $request->user_id,
                 'sale_status'=>1,
                 'total_amount' => 0.00,
                 'amount_paid' => 0.00,
@@ -113,17 +114,12 @@ class SaleController extends Controller
 
         try {
             $user=User::where('number_document', $cedula)->firstOrFail();
-            
-            if($user->customer==null){
-                throw new Exception('Id No Encontrado');
-            }
-
-            $customer_id=$user->customer->id;
-            $sales = Sale::where('customer_id', $customer_id)->get();
+            $user_id=$user->id;
+            $sales = Sale::where('user_id', $user_id)->get();
             if ($sales->isEmpty()) {
-                return response()->noContent();
+                Throw new Exception();
             }
-            return SaleResource::collection($sales);
+            return SaleDetailResource::collection($sales);
     
         } catch (\Exception $e) {
             return response()->json([
@@ -139,7 +135,7 @@ class SaleController extends Controller
     public function show(string $id)
     {
         $sale=Sale::findOrFail($id);
-        return new SaleResource($sale);
+        return new SaleDetailResource($sale);
     }
 
     /**
@@ -177,7 +173,7 @@ class SaleController extends Controller
                  throw new Error('Monto No Valido, Verifique el Monto a Pagar');
     
         } catch (\Exception $e) {
-            return response()->json(["error"=>$e],500);
+            return response()->json(["error"=>$e->getMessage()],500);
         }
         
     }

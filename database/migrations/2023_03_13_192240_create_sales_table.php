@@ -16,16 +16,16 @@ return new class extends Migration
             $table->id();
             $table->string('slug')->unique();
             $table->dateTime('sale_date');
-            $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('user_id');
             $table->enum('sale_status',[Sale::PENDING,Sale::PARTIALLYPAID,Sale::PAID])
                     ->default(Sale::PENDING);
             $table->decimal('total_amount', $precision = 10, $scale = 2);
             $table->decimal('amount_paid', $precision = 10, $scale = 2);
 
                     
-            $table->foreign('customer_id')
+            $table->foreign('user_id')
                     ->references('id')
-                    ->on('customers')
+                    ->on('users')
                     ->onDelete('cascade');
         });
             

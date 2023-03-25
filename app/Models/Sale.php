@@ -25,11 +25,11 @@ class Sale extends Model
     ];
 
     
-    protected $fillable = ['slug','sale_date','customer_id','sale_status','total_amount','amount_paid'];
+    protected $fillable = ['slug','sale_date','user_id','sale_status','total_amount','amount_paid'];
 
-    public function customer():BelongsTo
+    public function user():BelongsTo
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(User::class);
     }
 
     public function payments():HasMany

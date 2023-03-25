@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Customer;
 use App\Models\Sale;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Sale>
@@ -23,7 +24,7 @@ class SaleFactory extends Factory
         return [
             'slug'=>Str::slug( $this->faker->name(5)),
             'sale_date'=>$this->faker->dateTimeBetween('-1 week', '+1 week'),
-            'customer_id'=>Customer::all()->random()->id,
+            'user_id'=>User::all()->random()->id,
             'total_amount'=>0,
             'amount_paid'=>0,
             

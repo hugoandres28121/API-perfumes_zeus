@@ -17,6 +17,7 @@ class SaleDetailResource extends JsonResource
     public function toArray(Request $request): array
     {
 
+            
         $missing_amount=floatval($this->total_amount-$this->amount_paid);
         return [
             'id_sale'=>$this->id,

@@ -6,16 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Payments extends Model
+class Payment extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
+    protected $table = 'payments';
 
-    protected $fillable= ['slug','payment_date','amount_paid','sales'];
+    protected $fillable= ['payment_date','amount_paid','sale_id'];
 
     public function sale():BelongsTo
     {
-        return $this->belongsTo(Sales::class);
+        return $this->belongsTo(Sale::class);
     }
 }

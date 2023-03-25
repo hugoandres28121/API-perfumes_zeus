@@ -14,10 +14,10 @@ class Customer extends Model
     
     protected $fillable= ['address','mobile_number','user_id'];
 
-    public function sales():HasMany
-    {
-        return $this->hasMany(Sales::class);
-    }
+    // public function sales():HasMany
+    // {
+    //     return $this->hasMany(Sales::class);
+    // }
 
     public  function user():BelongsTo
     {
