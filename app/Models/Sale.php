@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use App\Traits\updateStateSale;
 
 class Sale extends Model
 {
-    use HasFactory;
+    use HasFactory,updateStateSale;
 
     const PENDING= 1;
     const PARTIALLYPAID=2;

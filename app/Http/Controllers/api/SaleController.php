@@ -28,7 +28,7 @@ class SaleController extends Controller
     public function index()
     {
         $sales =Sale::all();
-        return $sales;
+        return SaleDetailResource::collection($sales);
     }
 
     /**
@@ -155,13 +155,16 @@ class SaleController extends Controller
             $sale_amount=$sale->total_amount;
             $amount_paid =$request->amount_paid;
 
+            
             if($amount_paid<=$sale_amount){
-                if ($amount_paid == $sale_amount) {
-                    $sale_status= Sale::PAID;
-                }
-                if ($amount_paid > 0 && $amount_paid <$sale_amount) {
-                    $sale_status= Sale::PARTIALLYPAID;   
-                };
+
+                $sale_status= $sale->updateState($amount_paid,$sale_amount);
+                // if ($amount_paid == $sale_amount) {
+                //     $sale_status= Sale::PAID;
+                // }
+                // if ($amount_paid > 0 && $amount_paid <$sale_amount) {
+                //     $sale_status= Sale::PARTIALLYPAID;   
+                // };
 
                 $sale->update([
                     'amount_paid'=>$request->amount_paid,

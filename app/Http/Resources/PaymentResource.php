@@ -16,10 +16,13 @@ class PaymentResource extends JsonResource
     {
         $amount_missing = ($this->sale->total_amount-$this->sale->amount_paid)-$this->amount_paid;
         return [
-            "payment_date"=>$this->payment_date,
+            "sale_id"=>$this->sale->id,
             "payment_id" => $this->id,
+            "payment_date"=>$this->payment_date,
             "user_id" => $this->sale->user->id,
-            "user_name" => $this->sale->user->name,
+            "customer" => $this->sale->user->name,
+            "total_amount" => floatval($this->sale->total_amount),
+            "total_paid" => floatval($this->sale->amount_paid+$this->amount_paid),
             "amount_paid"=>$this->amount_paid,
             "amount_missing"=>$amount_missing
 

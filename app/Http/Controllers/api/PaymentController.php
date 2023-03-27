@@ -32,22 +32,26 @@ class PaymentController extends Controller
         ]);
 
         
-
+        //DE la tabla Ventas, extraigo, la cantidad pagada hasta el momento y el total de la venta
         $amount_paid_sale=$payment->sale->amount_paid;
+        $total_amount=$payment->sale->total_amount;
 
         $sale = Sale::find($data['sale_id']);
-         
+
+        $amount_paid_updated=$amount_paid_sale+$amount_paid;
+
+        $sale_status = $sale->updateState($amount_paid_updated,$total_amount);
+
         $sale->update([
-            'amount_paid'=>$amount_paid_sale+$amount_paid
+            'sale_status' => $sale_status,
+            'amount_paid'=>$amount_paid_updated
         ]);
-
-
-
+        
         return PaymentResource::make($payment);
     }
 
     public function show($id)
     {
-
+        
     }
 }
