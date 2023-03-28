@@ -22,15 +22,9 @@ class LoginController extends Controller
             'client_secret' => ENV('PASSWORD_GRANT_CLIENT_CLIENT_SECRET'),
             'username' => $request->username,
             'password' => $request->password,
-            'scope' => '*',
+            'scope' => '',
         ]);
         
-    
-        return response()->json([
-            "token_type" => $response['token_type'],
-            "expires_in"=>$response['expires_in'],
-            "access_token"=>$response['access_token'],
-            "refresh_token"=>$response['refresh_token'],
-        ]);
+        return $response->json();
     }
 }

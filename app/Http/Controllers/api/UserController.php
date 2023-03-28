@@ -13,6 +13,13 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('store');
+        $this->middleware('can:show all users')->only(['index']);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -48,6 +55,13 @@ class UserController extends Controller
             'password'=>Hash::make($request->password),
             'confirmed'=>$request->password
         ]);
+
+        if($user->is_admin){
+            $user->assignRole('admin');
+        }
+        $user->assignRole('customer');
+
+
 
         Customer::create([
             'address'=>$request->address,

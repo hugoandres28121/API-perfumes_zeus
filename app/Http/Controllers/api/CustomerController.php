@@ -12,6 +12,17 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
+     public function __construct()
+     {
+         $this->middleware('auth:api');
+         $this->middleware('can:show all customers')->only(['index']);
+         $this->middleware('can:show customer')->only(['show']);
+         $this->middleware('can:edit customer')->only(['update']);
+         $this->middleware('can:create customer')->only(['store']);
+     }
+
     public function index()
     {
         $customers= Customer::all();
@@ -53,7 +64,6 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer)
     {
         $request->validate([
-            'slug'=>'required|string|max:255|unique:customers,slug,'.$customer->id,
             'name'=>'required|string|max:255',
             'lastName'=>'required|string|max:255',
             'address'=>'required|string|max:255'

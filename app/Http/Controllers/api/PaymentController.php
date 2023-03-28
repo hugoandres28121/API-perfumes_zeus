@@ -9,7 +9,17 @@ use App\Models\Sale;
 use App\Http\Resources\PaymentResource;
 
 class PaymentController extends Controller
+
+
 {
+
+    public function __construct()
+     {
+         $this->middleware('auth:api');
+         $this->middleware('can:show all payments')->only(['index']);
+         $this->middleware('can:show payment')->only(['show']);
+         $this->middleware('can:create payment')->only(['paySale']);
+     }
     public function index()
     {
         $payments= Payment::all();
@@ -52,6 +62,7 @@ class PaymentController extends Controller
 
     public function show($id)
     {
-        
+        $payment=Payment::findOrFail($id);
+        return new PaymentResource($payment);
     }
 }

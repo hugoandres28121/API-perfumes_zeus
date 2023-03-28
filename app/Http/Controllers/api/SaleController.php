@@ -18,9 +18,14 @@ class SaleController extends Controller
 {
 
     public function __construct()
-    {
-       // $this->middleware('auth:api')->except('index','show');
-    }
+     {
+         $this->middleware('auth:api');
+         $this->middleware('can:show all sales')->only(['index']);
+         $this->middleware('can:show sales by user')->only(['showSalesByUser']);  
+         $this->middleware('can:show sale')->only(['show']);  
+         $this->middleware('can:paid_sale')->only(['update']);
+         $this->middleware('can:create_sale')->only(['store']);
+     }
 
     /**
      * Display a listing of the resource.
@@ -46,12 +51,12 @@ class SaleController extends Controller
 
         try {
             // Crear la venta
-            //$user_id=auth()->user()->id;
+            $user_id=auth()->user()->id;
             $sale = Sale::create([
                 'slug' => Str::slug(Str::random(10).' '.Str::random(10)), // Generar un código aleatorio de 10 caracteres
                 'sale_date' =>  now()->toDateTimeString(),
-                //'user_id' => $user_id,
-                'user_id' => $request->user_id,
+                'user_id' => $user_id,
+            //    'user_id' => $request->user_id,
                 'sale_status'=>1,
                 'total_amount' => 0.00,
                 'amount_paid' => 0.00,

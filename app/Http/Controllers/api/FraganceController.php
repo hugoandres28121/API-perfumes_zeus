@@ -13,6 +13,18 @@ class FraganceController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
+     public function __construct()
+     {
+         $this->middleware('auth:api');
+         $this->middleware('can:show all fragances')->only(['index']);
+         $this->middleware('can:show fragance')->only(['show']);  
+         $this->middleware('can:edit fragance')->only(['update']);
+         $this->middleware('can:create fragance')->only(['store']);
+         $this->middleware('can:delete fragance')->only(['destroy']);
+     }
+
     public function index()
     {
         $fragances = Fragance::all();
